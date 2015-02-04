@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.java.hibernate.dao.Address" table="ADDRESS">
+	
+		<id name="id" column="ADDRESS_ID">
+			<generator class="foreign">
+				<param name="property">user</param>
+			</generator>
+		</id>
+		<property name="line1" column="LINE1"/>
+		<property name="city" column="CITY"/>
+		<property name="state" column="STATE"/>
+		
+		<one-to-one class="com.java.hibernate.dao.User" name="user" constrained="true" property-ref="address"/>
+		
+	</class>
+</hibernate-mapping>

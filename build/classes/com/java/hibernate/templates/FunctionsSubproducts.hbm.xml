@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.java.hibernate.dao.FunctionsSubproducts" lazy="true" batch-size="5" table="VFUNCTIONS_SUBPRODUCTS" mutable="false">
+		<composite-id name="id" class="com.java.hibernate.dao.FunctionsSubproducts$Id">
+			<key-property name="functionId" access="field" column="FNCTN_ID"/>
+			<key-property name="subProductId" access="field" column="SUB_PD_ID"/>
+			<key-property name="code" access="field" column="code"/>
+		</composite-id>
+		<many-to-one name="function" column="FNCTN_ID" fetch="join" class="com.java.hibernate.dao.Functions" insert="false" update="false"/>
+		<many-to-one name="subProducts" column="SUB_PD_ID" lazy="proxy" class="com.java.hibernate.dao.Subproducts" insert="false" update="false"/>
+		<property name="code" column="code" insert="false" update="false"/>
+	</class>
+
+</hibernate-mapping>

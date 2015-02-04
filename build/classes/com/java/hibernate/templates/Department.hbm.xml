@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.java.hibernate.dao.Department" table="DEPARTMENT">
+		<id name="departmentId" type="java.lang.Long" column="DEPT_ID">
+			<generator class="native"></generator>
+		</id>
+		<set name="employees" table="EMPLOYEE" inverse="true" lazy="true"
+			fetch="select">
+			<key column="DEPT_ID" not-null="true" />
+			<one-to-many class="com.java.hibernate.dao.Employee" />
+		</set>
+	</class>
+
+</hibernate-mapping>

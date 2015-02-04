@@ -1,0 +1,155 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/tx
+    	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+
+
+	
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.java.core"/>
+	<context:spring-configured/>
+	<context:load-time-weaver/>
+	
+	
+	
+	<tx:annotation-driven transaction-manager="txManager" />
+	
+
+	<bean id="securityMethods" class="com.java.core.SecurityMethods"/>
+
+
+
+
+
+
+
+
+	<bean id="userService" class="com.java.hibernate.service.UserServiceImpl"/>
+
+	<bean id="serviceLocator" class="com.java.hibernate.service.ServiceLocator" >
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="userDetailsService" class="com.java.hibernate.dao.UserDetailsDAOImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="mySessionFactory1" />
+	</bean>
+
+	<bean id="userDetails" class="com.java.hibernate.dto.UserDetails">
+		<property name="userId" value="123" />
+		<property name="userName" value="Samatha" />
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>myMessages</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="url" value="${jdbc.url}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="username" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="user" class="com.java.core.User" autowire="byType">
+		<property name="userId" value="123" />
+		<property name="firstName" value="Samatha" />
+		<property name="lastName" value="Pathipaka" />
+	</bean>
+
+
+
+
+	<!--
+		<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	-->
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>com/java/hibernate/templates/Student.hbm.xml</value>
+				<value>com/java/hibernate/templates/Course.hbm.xml</value>
+				<value>com/java/hibernate/templates/Department.hbm.xml</value>
+				<value>com/java/hibernate/templates/Employee.hbm.xml</value>
+				<value>com/java/hibernate/templates/Test.hbm.xml</value>
+				<value>com/java/hibernate/templates/Address.hbm.xml</value>
+				<value>com/java/hibernate/templates/User.hbm.xml</value>
+				<value>com/java/hibernate/templates/Functions.hbm.xml</value>
+				<value>com/java/hibernate/templates/Subproducts.hbm.xml</value>
+				<value>com/java/hibernate/templates/FunctionsSubproducts.hbm.xml</value>
+				</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+			</props>
+		</property>
+
+	</bean>
+
+
+	<bean id="mySessionFactory1"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.java.hibernate.dto.UserDetails</value>
+				<value>com.java.hibernate.dto.Student</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<!--
+					<prop
+					key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				-->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="mySessionFactory1" />
+	</bean>
+	
+		<bean id="hibernateTemplate123" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+</beans>

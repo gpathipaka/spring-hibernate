@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="com.java.hibernate.dao.Subproducts" lazy="true" table="VSUBPRODUCTS" >
+		<id name="id" column="SUB_PD_ID">
+			<generator class="native"/>
+		</id>
+		<property name="subProductCode" column="SUB_PD_C"/>
+		<set name="functions" inverse="true" fetch="join" table="VFUNCTIONS_SUBPRODUCTS">
+			<key column="SUB_PD_ID"/>
+			<many-to-many class="com.java.hibernate.dao.Functions" column="FNCTN_ID"/>
+		</set>
+	
+	</class>
+	
+
+</hibernate-mapping>

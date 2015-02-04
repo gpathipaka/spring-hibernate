@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.java.hibernate.dao.Course" table="COURSE">
+		<meta attribute="class-description">
+			This class contains course details.
+	</meta>
+		<id name="courseId" type="long" column="COURSE_ID">
+			<generator class="native" />
+		</id>
+		<property name="courseName" type="string" column="COURSE_NAME" />
+
+		<set name="students" table="STUDENT_COURSE" cascade="all" inverse="true"
+			fetch="join">
+			<key column="COURSE_ID" />
+			<many-to-many column="STUDENT_ID" class="com.java.hibernate.dao.Student" />
+		</set>
+	</class>
+</hibernate-mapping>

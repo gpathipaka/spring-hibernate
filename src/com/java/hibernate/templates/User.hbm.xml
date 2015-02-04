@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class name="com.java.hibernate.dao.User" table="MY_USER">
+
+		<id name="id" column="USER_ID">
+			<generator class="native" />
+		</id>
+		<property name="firstName" column="FIRST_NAMe" />
+		<property name="lastName" column="LAST_NAMe" />
+
+		<!--
+			One to One Relation ship <one-to-one
+			class="com.java.hibernate.dao.Address" name="address"
+			cascade="save-update"/>
+		-->
+
+		<many-to-one class="com.java.hibernate.dao.Address" name="address" column="ADDRESS_ID" cascade="save-update" unique="true"/>
+
+	</class>
+
+</hibernate-mapping>

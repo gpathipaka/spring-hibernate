@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.java.hibernate.dao.Functions" lazy="true" table="VFUNCTIONS">
+		<id name="id" column="FNCTN_ID">
+			<generator class="native"/>
+		</id>
+		<property name="functionCode" column="FNCTN_C"/>
+		<set name="subproducts" lazy="true" table="VFUNCTIONS_SUBPRODUCTS" cascade="all">
+			<key column="FNCTN_ID"/>
+			<many-to-many class="com.java.hibernate.dao.Subproducts" column="SUB_PD_ID"/>
+		</set>
+	</class>
+
+
+</hibernate-mapping>
